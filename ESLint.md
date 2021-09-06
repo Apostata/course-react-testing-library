@@ -11,6 +11,8 @@
 ## Plugins 
 extendem o código do lint reforçando as melhores práticas
 
+instalar o `eslint-plugin-testing-library`
+
 ## Configurando o eslint com o jest-dom e testing-library
 **criando arquivo `.eslintrc.json` na raiz do projeto**
 ```json
