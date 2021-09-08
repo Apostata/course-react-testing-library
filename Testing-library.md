@@ -67,19 +67,60 @@ wait for é usado para teste assincronos para quando o elemento leva um certo te
 exemplo:
 ```js
 test('Povover appers when mouseover on checkbox label, and disapears when mouseout', async()=>{
-            render(<SummaryForm/>)
-            const termsAndConditionsPopoverText = screen.getByText(termsAnConditionsText)
+    render(<SummaryForm/>)
+    const termsAndConditionsPopoverText = screen.getByText(termsAnConditionsText)
 
-            userEvent.hover(termsAndConditionsPopoverText)
-            const popover =screen.getByText(popoverText)
-            expect(popover).toBeInTheDocument();
-    
-            userEvent.unhover(termsAndConditionsPopoverText)
-            await waitFor(() => {
-                const nullPopover = screen.queryByText(popoverText)
-                expect(nullPopover).not.toBeInTheDocument();
-            });
-        })
+    userEvent.hover(termsAndConditionsPopoverText)
+    const popover =screen.getByText(popoverText)
+    expect(popover).toBeInTheDocument();
+
+    userEvent.unhover(termsAndConditionsPopoverText)
+    await waitFor(() => {
+        const nullPopover = screen.queryByText(popoverText)
+        expect(nullPopover).not.toBeInTheDocument();
+    });
+})
 ```
 
 ## Moking server responses
+### Mock service worker
+* Previnir chamadas ao server para retornar resposta mockada
+`yarn install msw` ou `npm i msw` 
+* References:
+  * https://mswjs.io/
+  * https://mswjs.io/docs/getting-started/mocks/rest-api
+  * https://mswjs.io/docs/getting-started/mocks/graphql-api
+
+#### Criando o server e handlers
+criando os handlers, que são os endpoints com as respostas mockadas:
+
+**criando em `src/mocks/handlers.js`:**
+```js
+import { rest } from "msw";
+
+export const handlers = [
+  rest.get("http://localhost:3030/scoops", (req, resp, ctx) => {
+    //handler para chamada a /scoops
+    return resp(
+      ctx.json([
+        { name: "chocolate", imagePath: "/images/chocolate.png" },
+        { name: "Vanilla", imagePath: "/images/vanillar.png" },
+      ])
+    );
+  }),
+  ... // um array de handlers
+];
+
+``` 
+
+**configurando o server para mock em `src/mocks/server.js`:
+```js
+import { setupServer } from "msw/node";
+import { handlers } from "./handlers";
+
+export const server = setupServer(...handlers);
+
+```
+**Integrando com os testes:**
+neste link a a integração com o CRA (creat react app e manualmente, para quem não usa CRA)
+https://mswjs.io/docs/getting-started/integrate/node
