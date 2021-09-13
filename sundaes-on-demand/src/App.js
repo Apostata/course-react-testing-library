@@ -1,18 +1,13 @@
+import { Container } from "react-bootstrap";
 import "./App.css";
-import SummaryForm from "./Pages/summary/SummaryForm";
+import OrderEntry from "./Pages/entry/OrderEntry";
+// import SummaryForm from "./Pages/summary/SummaryForm";
 function App() {
   return (
-    <div>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-      <SummaryForm />
-    </div>
+    <Container>
+      <h1>Sundae App</h1>
+      <OrderEntry />
+    </Container>
   );
 }
 

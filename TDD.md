@@ -43,3 +43,7 @@ Funções separadas do componente
 * testar se a lógica é complexa
 * usada por mais de um componente
   
+## Jest Debugging Tools
+No próprio teste, no console. aparecem as opções para  `w` para whating, onde teremos a opção de `p` para digitar uma pattern para encontrar o arquivo que você precisa
+podemos usar o `test.only('descrição do teste', ()=>{... função para testar})` para testar somente este teste, ou `test.skip('descrição do teste', ()=>{... função para testar})`, para ignorar os testes marcabos com `skip`
+
