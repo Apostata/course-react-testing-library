@@ -17,7 +17,7 @@ export const ScoopsAndToppingsProvider = ({children}) =>{
           return resp;
         }
         
-    };
+    }
 
     const getToppings = async (retorno = false) => {
         const resp = await getScoopsOrToppings('toppings')
@@ -26,7 +26,7 @@ export const ScoopsAndToppingsProvider = ({children}) =>{
         } else {
           return resp;
         }
-    };
+    }
 
     return (
         <ScoopsAndToppingsContext.Provider value={{scoops, toppings, getScoops, getToppings, error}}>

@@ -302,4 +302,18 @@ describe('scoops subtotal', ()=>{
 2. Erro: `An update to component inside a test as not wrapped in a act(...)`
    * Solução: "Provavelmente tem um update no componente depois do test ter terminado. use await e findBy...()"
 3. Erro: `Can't perform a React state update on an unmounted component. This is a no-op but indicates a memory leek in your application.`
-   * 
+   * Solução: "Provavelmente tem um update no componente depois do test ter terminado. use await e findBy...()"
+4. Erro: `connect ECONNREFUSED 127.0.0.1`
+   * Solução: "Provavelmente ou não há um mock para o endpoint chamado ou seu método está errado, exemplo: chamando um POST mas o handler esta como GET"
+
+### Preventing default
+
+```js
+    const submitOrderButton = screen.getByRole('button', {name:/submit order/i})
+    const submitEvent = createEvent.click(submitOrderButton)
+    submitEvent.preventDefault = jest.mock()
+    userEvent.click(submitOrderButton, submitEvent)
+```
+
+### Testando com rotas
+em caso de teste com rotas e navegação par outra rota é necessário aguardar até que todas chamadas assincronas sejam feitas para poder testar

@@ -3,8 +3,8 @@
 import { useEffect } from 'react'
 import Option from './Option'
 import { Row } from 'react-bootstrap'
-import { useScoopContext, ScoopsAndToppingsProvider } from '../../Providers/scoopsAndToppings.provider'
-import { useOrderDetailsContext, OrderDetailsProvider } from '../../Providers/OrderDetails.provider'
+import { useScoopContext} from '../../Providers/scoopsAndToppings.provider'
+import { useOrderDetailsContext } from '../../Providers/OrderDetails.provider'
 import AlertBanner from '../../components/AlertBanner'
 import { pricePerItem } from '../../constants'
 import { formatCurrency } from '../../helpers/formatCurrency'
@@ -13,7 +13,8 @@ export function Options({optionsType}){
     const {scoops, getScoops, toppings, getToppings, error} = useScoopContext()   
     const [orderDetails, updateItemCount] = useOrderDetailsContext()
     useEffect(()=>{
-        optionsType ==='scoops'? getScoops(): getToppings()
+        if(optionsType ==='scoops') getScoops()
+        if(optionsType ==='toppings') getToppings()
     },[])
 
     const renderOption = ()=>{
@@ -42,13 +43,15 @@ export function Options({optionsType}){
 
 }
 
-export default function WithContext(props){
-    const { optionsType } = props
-    return (
-        <OrderDetailsProvider>
-            <ScoopsAndToppingsProvider>
-                <Options optionsType={optionsType}/>
-            </ScoopsAndToppingsProvider>
-        </OrderDetailsProvider>
-    )
-}
+export default Options
+
+// export default function WithContext(props){
+//     const { optionsType } = props
+//     return (
+//         <OrderDetailsProvider>
+//             <ScoopsAndToppingsProvider>
+//                 <Options optionsType={optionsType}/>
+//             </ScoopsAndToppingsProvider>
+//         </OrderDetailsProvider>
+//     )
+// }

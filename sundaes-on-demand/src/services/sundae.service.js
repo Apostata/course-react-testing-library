@@ -8,3 +8,12 @@ export const getScoopsOrToppings = async (type) => {
     return { message: e.response.data.errorMessage };
   }
 };
+
+export const postOrder = async (order) => {
+  try {
+    const resp = await axios.post("http://localhost:3030/order", order);
+    return resp.data;
+  } catch (e) {
+    return { message: e.response.data.errorMessage };
+  }
+};

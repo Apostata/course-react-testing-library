@@ -1,9 +1,11 @@
 import React from "react";
 import {Form, Button, Popover, OverlayTrigger} from 'react-bootstrap'
-
+import { useOrderDetailsContext } from '../../Providers/OrderDetails.provider'
+import { useHistory } from 'react-router-dom'
 
 function SummaryForm(){
-
+    const history = useHistory()
+    const createOrder = useOrderDetailsContext()[3]
     const [disabledSubmit, setDisabledSubmit] = React.useState(true)
 
     const popover = (
@@ -35,7 +37,14 @@ function SummaryForm(){
                     label={checkboxLabel}
                 />
             </Form.Group>
-            <Button variant="primary" type="submit" disabled={disabledSubmit}>Confirm order</Button>
+            <Button variant="primary" type="submit" disabled={disabledSubmit}
+                onClick={(e)=>{
+                    e.preventDefault()
+                    createOrder({}, false, ()=>{
+                        history.push('/orderConfirmation')
+                    })
+                }}
+            >Confirm order</Button>
         </Form>
     )
 

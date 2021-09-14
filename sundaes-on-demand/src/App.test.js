@@ -1,8 +1,19 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 
-test("renders learn react link", () => {
-  // render(<App />);
+const renderWithRouter = (ui, { route = "/summary" } = {}) => {
+  window.history.pushState({}, "summary", route);
+
+  return render(ui, { wrapper: MemoryRouter });
+};
+
+test("Render Summary page", async () => {
+  renderWithRouter(<App />);
+  const termsAndCOnditions = await screen.findByRole("checkbox", {
+    name: /terms and conditions/i,
+  });
+  expect(termsAndCOnditions).toBeInTheDocument();
   // const linkElement = screen.getByText(/learn react/i);
   // expect(linkElement).toBeInTheDocument();
   // expect(linkElement).toHaveTextContent(`Learn React`);

@@ -1,7 +1,9 @@
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import { subtotalCalc } from "../helpers/subtotalCalc";
 import { formatCurrency } from "../helpers/formatCurrency";
-const OrderDetailsContext = createContext();
+import { postOrder } from '../services/sundae.service'
+
+export const OrderDetailsContext = createContext();
 
 export const useOrderDetailsContext = () =>{
     const context = useContext(OrderDetailsContext)
@@ -13,9 +15,11 @@ export const useOrderDetailsContext = () =>{
 }
 
 export const OrderDetailsProvider = (props) =>{
+    const {children, ...newProps} = props
+    const [orderNumber, setOrderNumber] = useState(props?.orderNumber || null)
     const [optionCounts, setOptionCounts] = useState({
-        scoops: new Map(), // [key, value]
-        toppings: new Map()
+        scoops: props?.scoops || new Map(), // [key, value]
+        toppings: props?.toppings || new Map()
     })
 
     const zeroCurrency = formatCurrency(0)
@@ -40,17 +44,40 @@ export const OrderDetailsProvider = (props) =>{
     const value = useMemo(()=>{
         function updateItemCount(itemName, newItemCount, optionType){
             const newOptionCounts = {...optionCounts }
-            debugger
             const optionCountsMap = optionCounts[optionType];
             optionCountsMap.set(itemName, parseInt(newItemCount))
 
             setOptionCounts(newOptionCounts)
         }
+
+        function resetOrder(){
+            setOptionCounts({
+                scoops: new Map(),
+                toppings: new Map()
+            })
+            setOrderNumber(null)
+        }
+
+        const createOrder = async (data, retorno = false, callback=null) => {
+            const resp = await postOrder(data)
+            if (!retorno) {
+                setOrderNumber(resp.orderNumber)
+                if(callback && typeof callback === 'function'){
+                    callback()
+                }
+
+            } else {
+              return resp;
+            }
+            
+        };
+
         return [{
             ...optionCounts,
-            totals
-        }, updateItemCount]
-    },[optionCounts, totals])
+            totals,
+            orderNumber
+        }, updateItemCount, resetOrder, createOrder]
+    },[optionCounts, totals, orderNumber])
 
-    return <OrderDetailsContext.Provider value={value} {...props} />
+    return <OrderDetailsContext.Provider value={value} {...newProps} >{children}</OrderDetailsContext.Provider>
 }
