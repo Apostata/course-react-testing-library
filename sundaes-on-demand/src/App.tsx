@@ -9,22 +9,10 @@ export function App() {
 }
 
 function WithRouter() {
-  // return (
-  //   <Container>
-  //     <OrderDetailsProvider>
-  //       <Router>
-  //         <Routes />
-  //       </Router>
-  //     </OrderDetailsProvider>
-  //   </Container>
-  // );
-
   return (
     <Container>
       <OrderDetailsProvider>
-        <Router>
-          <Routes />
-        </Router>
+        <Router></Router>
       </OrderDetailsProvider>
     </Container>
   );
