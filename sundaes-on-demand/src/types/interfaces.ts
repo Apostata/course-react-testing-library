@@ -1,13 +1,16 @@
-import { Key } from "react-transition-group/node_modules/@types/react";
-
 export interface keyValue {
-  [key: Key]: string | number | Map<String, number>;
+  [key: string | number | symbol]: string | number | Map<String, number>;
 }
 
 export interface keyValueNested {
-  [key: Key]: keyValue;
+  [key: string | number | symbol]: keyValue;
 }
 export interface Counters {
   scoops?: Map<string, number>;
   toppings?: Map<string, number>;
+}
+
+export interface NotNullCounters {
+  scoops: Map<string, number>;
+  toppings: Map<string, number>;
 }

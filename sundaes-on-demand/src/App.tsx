@@ -12,7 +12,9 @@ function WithRouter() {
   return (
     <Container>
       <OrderDetailsProvider>
-        <Router></Router>
+        <Router>
+          <App />
+        </Router>
       </OrderDetailsProvider>
     </Container>
   );

@@ -4,6 +4,7 @@
     "downlevelIteration": true,
     "lib": ["es2019", "dom", "dom.iterable", "esnext"],
     "typeRoots": ["../node_modules/@types"],
+    "types": ["@types/jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

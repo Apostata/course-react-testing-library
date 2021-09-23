@@ -20,29 +20,33 @@ export function Options({ optionsType }: { optionsType: string }) {
 
   const renderOption = () => {
     if (optionsType === "scoops") {
-      return scoops.map((item, idx) => (
-        <Option
-          key={`${idx}-${item.name}`}
-          name={item.name as string}
-          imagePath={item.imagePath as string}
-          type="scoop"
-          updateItemCount={(name: string, count: string) =>
-            updateItemCount(name, count, "scoops")
-          }
-        />
-      ));
+      return (scoops as { name: string; imagePath: string }[]).map(
+        (item, idx) => (
+          <Option
+            key={`${idx}-${item.name}`}
+            name={item.name as string}
+            imagePath={item.imagePath as string}
+            type="scoop"
+            updateItemCount={(name: string, count: string) =>
+              updateItemCount(name, count, "scoops")
+            }
+          />
+        )
+      );
     } else {
-      return toppings.map((item, idx) => (
-        <Option
-          key={`${idx}-${item.name}`}
-          name={item.name as string}
-          imagePath={item.imagePath as string}
-          type="topping"
-          updateItemCount={(name: string, count: string) =>
-            updateItemCount(name, count, "toppings")
-          }
-        />
-      ));
+      return (toppings as { name: string; imagePath: string }[]).map(
+        (item, idx) => (
+          <Option
+            key={`${idx}-${item.name}`}
+            name={item.name as string}
+            imagePath={item.imagePath as string}
+            type="topping"
+            updateItemCount={(name: string, count: string) =>
+              updateItemCount(name, count, "toppings")
+            }
+          />
+        )
+      );
     }
   };
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-export function useImages(type) {
+export function useImages(type: string) {
   const [images, setImages] = useState([]);
 
   const getImages = async (retorno = false) => {

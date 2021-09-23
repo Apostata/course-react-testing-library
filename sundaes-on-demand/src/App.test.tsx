@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import { ReactElement } from "react";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 
-const renderWithRouter = (ui, { route = "/summary" } = {}) => {
+const renderWithRouter = (ui: ReactElement, { route = "/summary" } = {}) => {
   window.history.pushState({}, "summary", route);
 
   return render(ui, { wrapper: MemoryRouter });

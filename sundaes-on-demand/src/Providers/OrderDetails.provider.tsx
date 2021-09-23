@@ -19,12 +19,9 @@ type Totals = {
   [key: string]: string;
 };
 
-type OrderDetails = {
-  scoops: Map<string, number>;
-  toppings: Map<string, number>;
+interface OrderDetails extends OderDetailsDefaultValue {
   totals: Totals;
-  orderNumber: number;
-};
+}
 
 type ContextValue = [
   OrderDetails,
@@ -108,7 +105,7 @@ export const OrderDetailsProvider = (props: OrderDetailsProps) => {
     ) => {
       const resp = await postOrder(data);
       if (!retorno && resp) {
-        const respObj = resp as keyValue;
+        const respObj = resp as { orderNumber?: number };
         setOrderNumber(respObj.orderNumber as number);
         if (callback && typeof callback === "function") {
           callback();
@@ -129,7 +126,6 @@ export const OrderDetailsProvider = (props: OrderDetailsProps) => {
       createOrder,
     ];
   }, [optionCounts, totals, orderNumber]);
-
   return (
     <OrderDetailsContext.Provider
       value={value as unknown as ContextValue}
