@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 import {useOrderDetailsContext} from '../../Providers/OrderDetails.provider'
